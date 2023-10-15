@@ -1,0 +1,357 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitor de Códigos de Barras</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s;
+        }
+
+        /* Estilos do tema neon */
+        body.neon-theme {
+            background: #262626;
+            color: #fff;
+        }
+
+        /* Estilos do tema escuro */
+        body.dark-theme {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        /* Estilos do tema branco */
+        body.white-theme {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Estilos do cabeçalho */
+        header {
+            background: #1d92e0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        header nav li {
+            margin-right: 10px; /* Reduzi a margem para 10px para aproximar os itens */
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px; /* Reduzi o tamanho da fonte para 16px */
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffcc00;
+        }
+
+        /* Estilos do logotipo */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .logo-container img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+            background: #1d92e0;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Estilos do ícone de sair */
+        .logout-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Estilos do scanner de código de barras */
+        .scanner-container {
+            position:center;
+            text-align: center;
+            margin: 100px ; /* Centraliza vertical e horizontalmente */
+            padding: 20px;
+            top: 50%;
+            left: 50%;
+            background: #f2f2f2;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s;
+        }
+
+
+
+
+
+
+        .scanner-container:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Estilos do logo circular */
+        .logo {
+            width: 100px;
+            height: 100px;
+            background-color: #1d92e0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+
+        .logo img {
+            max-width: 80px;
+            max-height: 80px;
+        }
+
+        /* Animação de rotação do ícone de configurações */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .config-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .config-icon:hover {
+            animation: spin 2s infinite linear;
+        }
+
+        /* Estilos do tema config */
+        .theme-config {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 45px;
+            right: 10px;
+            background: #1d92e0;
+            border-radius: 5px;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .theme-config a {
+            text-decoration: none;
+            color: #fff;
+            margin-bottom: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .theme-config a:hover {
+            color: #ffcc00;
+        }
+
+        /* Estilos do status de código de barras */
+        #status-text {
+            font-size: 24px;
+            margin-top: 20px;
+            color:  #000;
+        }
+
+        /* Estilos do botão "Copiar Código" */
+        #copyButton {
+            display: none;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #copyButton:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos do scanner line */
+        #scanner-line {
+            width: 58%;
+            height: 3px;
+            background-color: #007bff;
+            animation: scan 2s linear infinite;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+            border-radius: 3px;
+            opacity: 0.7;
+            filter: brightness(150%);
+            margin: 0 auto; /* Centraliza horizontalmente */
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(470px);
+            }
+        }
+    </style>
+</head>
+<body class="neon-theme">
+    <header>
+        <h1>CORDEIRO-IA</h1>
+        <nav>
+            <ul>
+                <li><a href="Untitled-1.html">Início</a></li>
+                <li><a href="textoemimagem.html">Texto em Imagem</a></li>
+                <li><a href="CONTAR.html">Contar Produtos</a></li>
+                <li><a href="DadosValidade.html">Dados de Produtos</a></li>
+                <li class="config-icon" onclick="toggleThemeConfig()">&#9881;</li>
+                <li class="logout-icon" onclick="confirmExit()">&#128682;</li>
+            </ul>
+        </nav>
+    </header>
+    <div class="logo-container">
+        <div class="logo">
+            <img src="Untitled (2).png" alt="Logo">
+        </div>
+    </div>
+    <div class="scanner-container">
+        <div id="status-text">Procurando Código de Barras!</div>
+        <div id="code-text"></div>
+        <div id="copyButton">Copiar Código</div>
+        <div id="scanner-line"></div>
+    </div>
+    <div class="theme-config" id="theme-options">
+        <a href="#" onclick="changeTheme('neon')">Tema Neon</a>
+        <a href="#" onclick="changeTheme('dark')">Tema Escuro</a>
+        <a href="#" onclick="changeTheme('white')">Tema Branco</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script>
+        document.getElementById("scanner-line").style.display = "none";
+
+        function changeTheme(theme) {
+            document.body.className = theme + '-theme';
+        }
+
+        function toggleThemeConfig() {
+            const themeConfig = document.getElementById('theme-options');
+            themeConfig.style.display = themeConfig.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function confirmExit() {
+            var exit = confirm('Tem certeza que deseja sair?');
+            if (exit) {
+                // Adicione aqui a lógica para sair da aplicação
+            }
+        }
+
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: document.querySelector(".scanner-container"),
+            },
+            decoder: {
+                readers: ["ean_reader"],
+            },
+        }, function (err) {
+            if (err) {
+                console.error("Erro ao inicializar Quagga:", err);
+                return;
+            }
+            document.getElementById("scanner-line").style.display = "block";
+            Quagga.start();
+        });
+
+        Quagga.onProcessed(function (result) {
+            const drawingCtx = Quagga.canvas.ctx.overlay;
+            const drawingCanvas = Quagga.canvas.dom.overlay;
+            const copyButton = document.getElementById("copyButton");
+            const codeText = document.getElementById("code-text");
+
+            if (result) {
+                if (result.boxes) {
+                    drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+                    result.boxes.filter(function (box) {
+                        return box !== result.box;
+                    }).forEach(function (box) {
+                        Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: "#007bff", lineWidth: 2 });
+                    });
+                }
+
+                if (result.box) {
+                    Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: "#007bff", lineWidth: 2 });
+                }
+
+                if (result.codeResult && result.codeResult.code) {
+                    const code = result.codeResult.code;
+
+                    // Adicione estilo neon ao texto "CÓDIGO DE BARRAS ENCONTRADO!"
+                    document.getElementById("status-text").innerHTML = '<span style="text-shadow: 0 0 10px #007bff, 0 0 20px #007bff, 0 0 30px #007bff;">CÓDIGO DE BARRAS ENCONTRADO!</span>';
+
+                    codeText.innerHTML = `<span style="color: black;">SEU CÓDIGO DE BARRAS É: ${code}</span>`;
+
+                    document.getElementById("copyButton").style.display = "block";
+
+                    // Adicione um ouvinte de evento ao botão "Copiar Código"
+                    copyButton.addEventListener("click", function () {
+                        // Copie o código para a área de transferência
+                        navigator.clipboard.writeText(code).then(function () {
+                            localStorage.setItem("codigoBarras", code);
+                           
+                            alert("CÓDIGO DE BARRAS COPIADO. VOLTANDO PARA A PÁGINA ANTERIOR.");
+                            // Volta para a página anterior
+                            window.close();
+                        }).catch(function (err) {
+                            console.error("Erro ao copiar o código:", err);
+                        });
+                    });
+
+                    Quagga.stop();
+                } else {
+                    // Oculte o botão "Copiar Código" se nenhum código de barras for detectado
+                    copyButton.style.display = "none";
+                    codeText.innerHTML = "";
+                }
+            } else {
+                // Oculte o botão "Copiar Código" se nenhum resultado for processado
+                copyButton.style.display = "none";
+                codeText.innerHTML = "";
+            }
+        });
+    </script>
+</body>
+</html>

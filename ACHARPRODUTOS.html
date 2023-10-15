@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Página</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s;
+        }
+
+            /* Estilos do tema neon */
+            body.neon-theme {
+                background: #262626;
+                color: #fff;
+            }
+
+            /* Estilos do tema escuro */
+            body.dark-theme {
+                background: #1a1a1a;
+                color: #fff;
+            }
+
+            /* Estilos do tema branco */
+            body.white-theme {
+                background: #fff;
+                color: #000;
+            }
+
+        /* Estilos do cabeçalho */
+        header {
+            background: #1d92e0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            header h1 {
+                font-size: 24px;
+                margin: 0;
+            }
+
+            header nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+            }
+
+            header nav li {
+                margin-right: 20px;
+            }
+
+            header nav a {
+                text-decoration: none;
+                color: #fff;
+                font-weight: bold;
+                font-size: 18px;
+                transition: color 0.3s;
+            }
+
+                header nav a:hover {
+                    color: #ffcc00;
+                }
+
+        /* Estilos dos botões */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+            .button-container button {
+                flex-basis: 30%;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s, transform 0.3s;
+            }
+
+                .button-container button.scan {
+                    background: #00cc00;
+                    color: #fff;
+                }
+
+                    .button-container button.scan:hover {
+                        background: #00aa00;
+                    }
+
+                .button-container button.clear {
+                    background: #cc0000;
+                    color: #fff;
+                }
+
+                    .button-container button.clear:hover {
+                        background: #aa0000;
+                    }
+
+                .button-container button.enter {
+                    background: #ffee10;
+                }
+
+                    .button-container button.enter:hover {
+                        background: #ffcc00;
+                    }
+
+        /* Estilos da configuração do tema */
+        .theme-config {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 45px;
+            right: 10px;
+            background: #1d92e0;
+            border-radius: 5px;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+            .theme-config a {
+                text-decoration: none;
+                color: #fff;
+                margin-bottom: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: color 0.3s;
+            }
+
+                .theme-config a:hover {
+                    color: #ffcc00;
+                }
+
+        /* Estilos do logotipo */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+            .logo-container img {
+                max-width: 100px;
+                max-height: 100px;
+                border-radius: 50%;
+                background: #1d92e0;
+                padding: 5px;
+                transition: transform 0.3s;
+            }
+
+                .logo-container img:hover {
+                    transform: scale(1.1);
+                }
+
+        /* Estilos do ícone de sair */
+        .logout-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Estilos do formulário */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f2f2f2;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s;
+        }
+
+            .form-container:hover {
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            }
+
+            .form-container input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+        /* Estilos do logo circular */
+        .logo {
+            width: 100px;
+            height: 100px;
+            background-color: #1d92e0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+
+            .logo img {
+                max-width: 80px;
+                max-height: 80px;
+            }
+
+        /* Animação de rotação do ícone de configurações */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .config-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .descri{
+            color:black
+        }
+        .config-icon:hover {
+            animation: spin 2s infinite linear;
+        }
+        /* Estilos do botão "Enviar ao Banco de Dados" com efeito de neon */
+        .submit-database.neon-button {
+            background: linear-gradient(45deg, #00cc00, #ffcc00);
+            color: #fff;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: neon-pulse 1.5s ease-in-out infinite;
+        }
+
+            .submit-database.neon-button:hover {
+                background: linear-gradient(45deg, #00aa00, #ffaa00);
+            }
+
+        @keyframes neon-pulse {
+            0%, 100% {
+                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+                box-shadow: 0 0 10px #00ff00;
+            }
+
+            50% {
+                text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00;
+                box-shadow: 0 0 5px #00ff00;
+            }
+        }
+    </style>
+</head>
+
+<body class="neon-theme">
+    <header>
+        <h1>CORDEIRO-IA</h1>
+        <nav>
+            <ul>
+                <li><a href="Untitled-1.html">Início</a></li>
+                <li><a href="textoemimagem.html">Texto em Imagem</a></li>
+                <li><a href="CONTAR.html">Contar Produtos</a></li>
+                <li><a href="DadosValidade.html">Dados de Produtos</a></li>
+                <li class="config-icon" onclick="toggleThemeConfig()">&#9881;</li>
+                <li class="logout-icon" onclick="confirmExit()">&#128682;</li>
+            </ul>
+        </nav>
+    </header>
+    <div class="logo-container">
+        <div class="logo">
+            <img src="Untitled (2).png" alt="Logo">
+        </div>
+    </div>
+    <div class="form-container" id="form-container">
+        <p class="descri">iIncluir produtos para simplificar o processo de envio ao banco de dados para reconhecimento automático</p>
+        <input type="text" id="nome-produtoO" placeholder="Coloque O nome do produto a ser adicionado" required>
+        <input type="text" id="descricao" placeholder="Descrição do produto." required>
+        <input type="number" id="codigo-barras" placeholder="Código de Barras:" required>
+
+
+        <button class="submit-database" onclick="enviarDadosAoBanco()">Enviar ao Banco de Dados Para Automação</button>
+    </div>
+    <div class="button-container">
+        <button class="scan" onclick="scanBarcode()">Scanear de Códigos de Barras</button>
+        <button class="clear" onclick="limparFormulario()">Limpar Formulário</button>
+
+        <button class="enter" onclick="digitar()">RECARREGAR PAGINA</button>
+    </div>
+    <div class="theme-config" id="theme-options">
+        <a href="#" onclick="changeTheme('neon')">Tema Neon</a>
+        <a href="#" onclick="changeTheme('dark')">Tema Escuro</a>
+        <a href="#" onclick="changeTheme('white')">Tema Branco</a>
+    </div>
+
+    <script>
+        function changeTheme(theme) {
+            document.body.className = theme + '-theme';
+        }
+
+        function toggleThemeConfig() {
+            const themeConfig = document.getElementById('theme-options');
+            themeConfig.style.display = themeConfig.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function confirmExit() {
+            var exit = confirm('Tem certeza que deseja sair?');
+            if (exit) {
+                // Adicione aqui a lógica para sair da aplicação
+            }
+        }
+
+        function scanBarcode() {
+
+            const newPageURL = 'HTMLPage1.html'; // Replace with the actual URL of the new page
+
+            // Navigate to the new HTML page
+            window.open(newPageURL, '_blank');
+        }
+
+        function limparFormulario() {
+            // Adicione aqui a lógica para limpar o formulário
+        }
+
+        function digitar() {
+            location.reload();
+        }
+
+        function enviarDadosAoBanco() {
+            const produto = document.getElementById("nome-produtoO").value;
+            const descript = document.getElementById("descricao").value;
+            const cdb = document.getElementById("codigo-barras").value;
+
+
+            fetch('https://api.baserow.io/api/database/rows/table/207130/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Token PUvStdXJlDa0GsRVweZL5qb6mknFgC8a',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "field_1427818": produto,
+                    "field_1427821": cdb,
+                    "field_1427822": descript,
+
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    alert("PRODUTO ADICIONADO COM SUCESSO!")
+                    localStorage.removeItem("codigoBarras");
+                })
+                .catch(error => console.error(error));
+
+        }
+    </script>
+</body>
+</html>

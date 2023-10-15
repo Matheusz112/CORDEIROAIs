@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vídeo de Plano de Fundo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000; /* Define uma cor de fundo caso o vídeo não seja carregado ou não suportado */
+        }
+
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%; /* Defina a largura para 100% da largura da tela */
+            height: auto; /* Isso fará com que a altura seja ajustada automaticamente proporcionalmente à largura */
+            z-index: -1;
+        }
+
+        @media (max-width: 768px) { /* Estilos para telas menores, por exemplo, dispositivos móveis */
+            video {
+                width: auto; /* Define a largura de volta para automático */
+                height: 100vh; /* Define a altura para preencher verticalmente a tela */
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay loop muted>
+        <source src="anuncio.mp4" type="video/mp4">
+    </video>
+
+    <!-- Conteúdo da página vai aqui -->
+
+</body>
+</html>

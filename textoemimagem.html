@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitor de Imagem</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s;
+        }
+
+        /* Estilos do tema azul */
+        body.theme-blue {
+            background: #1d92e0;
+            color: #fff;
+        }
+
+        /* Estilos do tema branco */
+        body.theme-white {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Estilos do tema escuro */
+        body.theme-dark {
+            background: #262626;
+            color: #fff;
+        }
+
+        /* Estilos do cabeçalho */
+        header {
+            background: #1d92e0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        header nav li {
+            margin-right: 20px;
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffcc00;
+        }
+
+        /* Estilos do logotipo */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .logo-container img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+            background: #1d92e0;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Estilos do ícone de sair */
+        .logout-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Estilos do leitor de imagem */
+        .image-reader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f2f2f2;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s;
+        }
+
+        .image-reader:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-reader input[type="file"] {
+            display: none;
+        }
+
+        .image-reader label {
+            padding: 10px 20px;
+            background: #1d92e0;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .image-reader label:hover {
+            background-color: #1476c3;
+        }
+
+        .image-preview {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Estilos da janela de texto */
+        .text-window {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f2f2f2;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s;
+        }
+
+        .text-window:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .text-output {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        /* Animação de rotação do ícone de configurações */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .config-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .config-icon:hover {
+            animation: spin 2s infinite linear;
+        }
+
+        /* Estilos do botão de tema */
+        .theme-config {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 45px;
+            right: 10px;
+            background: #1d92e0;
+            border-radius: 5px;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .theme-config a {
+            text-decoration: none;
+            color: #fff;
+            margin-bottom: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .theme-config a:hover {
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body class="theme-blue">
+    <header>
+        <h1>CORDEIRO-IA</h1>
+        <nav>
+            <ul>
+                <li><a href="Untitled-1.html">Inico</a></li>
+                <li><a href="textoemimagem.html">Texto em Imagem</a></li>
+                <li><a href="CONTAR.html">Contar Produtos</a></li>
+                <li><a href="DadosValidade.html">Dados de Produtos</a></li>
+                <li class="config-icon" onclick="toggleThemeConfig()">&#9881;</li>
+                <li class="logout-icon" onclick="confirmExit()">&#128682;</li>
+            </ul>
+        </nav>
+    </header>
+    <div class="logo-container">
+        <div class="logo">
+            <img src="Untitled (2).png" alt="Logo">
+        </div>
+    </div>
+    <div class="image-reader">
+        <input type="file" accept="image/*" id="input-image">
+        <label for="input-image">Carregar Imagem</label>
+        <img class="image-preview" id="image-preview" src="" alt="Imagem">
+    </div>
+    <div class="text-window">
+        <textarea class="text-output" placeholder="Texto Reconhecido"></textarea>
+    </div>
+    <div class="theme-config" id="theme-options">
+        <a href="#" onclick="changeTheme('theme-blue')">Tema Azul</a>
+        <a href="#" onclick="changeTheme('theme-white')">Tema Branco</a>
+        <a href="#" onclick="changeTheme('theme-dark')">Tema Escuro</a>
+    </div>
+
+    <script src="https://unpkg.com/tesseract.js@2.1.5/dist/tesseract.min.js"></script>
+    <script>
+        function changeTheme(theme) {
+            document.body.className = theme;
+        }
+
+        function toggleThemeConfig() {
+            const themeConfig = document.getElementById('theme-options');
+            themeConfig.style.display = themeConfig.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function confirmExit() {
+            var exit = confirm('Tem certeza que deseja sair?');
+            if (exit) {
+                // Adicione aqui a lógica para sair da aplicação
+            }
+        }
+
+        document.getElementById('input-image').addEventListener('change', async function () {
+            const inputImage = document.getElementById('input-image');
+            const imagePreview = document.getElementById('image-preview');
+            const textWindow = document.querySelector('.text-window');
+
+            const fileImage = inputImage.files[0];
+
+            if (fileImage) {
+                const imageURL = URL.createObjectURL(fileImage);
+                imagePreview.src = imageURL;
+
+                try {
+                    const worker = Tesseract.createWorker();
+                    await worker.load();
+                    await worker.loadLanguage('eng+por');
+                    await worker.initialize('eng+por');
+                    const { data: { text } } = await worker.recognize(imageURL);
+                    textWindow.style.display = 'block';
+                    textWindow.querySelector('.text-output').textContent = text;
+                    await worker.terminate();
+                } catch (error) {
+                    console.error('Erro ao ler imagem:', error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

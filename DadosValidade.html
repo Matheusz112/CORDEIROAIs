@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Página</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s;
+        }
+
+        /* Estilos do tema neon */
+        body.neon-theme {
+            background: #262626;
+            color: #fff;
+        }
+
+        /* Estilos do tema escuro */
+        body.dark-theme {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        /* Estilos do tema branco */
+        body.white-theme {
+            background: #000;
+            color: #000;
+        }
+
+        /* Estilos do cabeçalho */
+        header {
+            background: #1d92e0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        header nav li {
+            margin-right: 10px; /* Reduzi a margem para 10px para aproximar os itens */
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px; /* Reduzi o tamanho da fonte para 16px */
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffcc00;
+        }
+
+        /* Estilos da configuração do tema */
+        .theme-config {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 45px;
+            right: 10px;
+            background: #1d92e0;
+            border-radius: 5px;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .theme-config a {
+            text-decoration: none;
+            color: #fff;
+            margin-bottom: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .theme-config a:hover {
+            color: #ffcc00;
+        }
+
+        /* Estilos do logotipo */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .logo-container img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+            background: #1d92e0;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Estilos do ícone de sair */
+        .logout-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Estilos do logo circular */
+        .logo {
+            width: 100px;
+            height: 100px;
+            background-color: #1d92e0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+
+        .logo img {
+            max-width: 80px;
+            max-height: 80px;
+        }
+
+        /* Animação de rotação do ícone de configurações */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .config-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .config-icon:hover {
+            animation: spin 2s infinite linear;
+        }
+
+        /* Estilos da tabela */
+        .table-container {
+            margin: 2px;
+            padding: 20px;
+            background: #f2f2f2;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s;
+        }
+
+        .table-container:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color:  #000;
+        }
+
+        th {
+            background-color: #1d92e0;
+            color: white;
+        }
+
+        /* Adicione a classe "cell-text" para as células de texto */
+        td.cell-text {
+            color: #000; /* Cor do texto preto */
+        }
+
+        /* Estilos do botão de deletar */
+        .delete-button {
+            background-color: #cc0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .delete-button:hover {
+            background-color: #aa0000;
+        }
+
+        /* Estilos do botão de mostrar dados */
+        .show-data-button {
+            background-color: #00cc00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .show-data-button:hover {
+            background-color: #00aa00;
+        }
+    </style>
+</head>
+<body class="neon-theme">
+    <header>
+        <h1>CORDEIRO-IA</h1>
+        <nav>
+            <ul>
+                <li><a href="Untitled-1.html">Início</a></li>
+                <li><a href="textoemimagem.html">Texto em Imagem</a></li>
+                <li><a href="CONTAR.html">Contar Produtos</a></li>
+                <li><a href="DadosValidade.html">Dados de Produtos</a></li>
+                <li class="config-icon" onclick="toggleThemeConfig()">&#9881;</li>
+                <li class="logout-icon" onclick="confirmExit()">&#128682;</li>
+            </ul>
+        </nav>
+    </header>
+    <div class="logo-container">
+        <div class="logo">
+            <img src="Untitled (2).png" alt="Logo">
+        </div>
+    </div>
+    <div class="table-container">
+        <input type="text" id="Idproduto" placeholder="Digite o ID do Produto">
+        <button class="delete-button" onclick="deletarProduto()">Deletar</button>
+        <input class="show-data-button" type="button" value="MOSTRAR DADOS DOS PRODUTOS" onclick="mostrarDadosProdutos()">
+        <table id="tabelaInformacoes">
+            <thead>
+                <tr>
+                    <th>NOME DO PRODUTO</th>
+                    <th>QUANTIDADE</th>
+                    <th>CÓDIGO DE BARRAS</th>
+                    <th>VENCIMENTO</th>
+                    <th>SITUAÇÃO DO PRODUTO</th>
+                    <th>DIAS PARA VENCER</th>
+                    <th>ID PRODUTO</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="theme-config" id="theme-options">
+            <a href="#" onclick="changeTheme('theme-blue')">Tema Azul</a>
+            <a href="#" onclick="changeTheme('theme-white')">Tema Branco</a>
+            <a href="#" onclick="changeTheme('theme-dark')">Tema Escuro</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function mostrarDadosProdutos() {
+            axios({
+                method: "GET",
+                url: "https://api.baserow.io/api/database/rows/table/150731/?user_field_names=true",
+                headers: {
+                    Authorization: "Token QNhuEjQ6tUb2CmQyN2B5ipfhC61gLfXe"
+                }
+            })
+            .then(response => {
+                const tables = response.data.results;
+                const tabelaInformacoes = document.getElementById("tabelaInformacoes");
+
+                tables.forEach(table => {
+                    const linha = document.createElement("tr");
+
+                    const produtoColuna = document.createElement("td");
+                    produtoColuna.textContent = table.produto;
+                    linha.appendChild(produtoColuna);
+
+                    const quantidadeColuna = document.createElement("td");
+                    quantidadeColuna.textContent = table.quantidade;
+                    linha.appendChild(quantidadeColuna);
+
+                    const codigoBarrasColuna = document.createElement("td");
+                    codigoBarrasColuna.textContent = table.codig;
+                    linha.appendChild(codigoBarrasColuna);
+
+                    const dataSelecionada = new Date(table.VENCIMENTO);
+                    const dia = dataSelecionada.getDate() + 1;
+                    const mes = (dataSelecionada.getMonth() + 1).toString().padStart(2, '0');
+                    const ano = dataSelecionada.getFullYear();
+                    const dataFormatada = `${dia}/${mes}/${ano}`;
+
+                    const vencimentoColuna = document.createElement("td");
+                    vencimentoColuna.textContent = dataFormatada;
+                    linha.appendChild(vencimentoColuna);
+
+                    const idTrue = document.createElement("td");
+                    idTrue.textContent = table.SIT;
+                    linha.appendChild(idTrue);
+
+                    const idTruee = document.createElement("td");
+                    idTruee.textContent = table.diferenca;
+                    linha.appendChild(idTruee);
+
+                    const idColuna = document.createElement("td");
+                    idColuna.textContent = table.id;
+                    linha.appendChild(idColuna);
+
+                    tabelaInformacoes.appendChild(linha);
+                });
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
+
+        function deletarProduto() {
+            const produtoId = document.getElementById("Idproduto").value;
+
+            axios({
+                method: "DELETE",
+                url: `https://api.baserow.io/api/database/rows/table/150731/${produtoId}/`,
+                headers: {
+                    Authorization: "Token QNhuEjQ6tUb2CmQyN2B5ipfhC61gLfXe"
+                }
+            })
+            .then(response => {
+                if (response.status === 204) {
+                  location.reload(); 
+                    alert("Produto deletado com sucesso!");
+
+                } else {
+                    alert("Erro ao excluir o produto.");
+                }
+            })
+            .catch(error => {
+                alert("Erro ao excluir o produto.");
+                console.error(error);
+            });
+ 
+        }
+
+        function changeTheme(theme) {
+            document.body.className = theme + '-theme';
+        }
+
+        function toggleThemeConfig() {
+            const themeConfig = document.getElementById('theme-options');
+            themeConfig.style.display = themeConfig.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function confirmExit() {
+            var exit = confirm('Tem certeza que deseja sair?');
+            if (exit) {
+                // Adicione aqui a lógica para sair da aplicação
+            }
+        }
+    </script>
+</body>
+</html>
